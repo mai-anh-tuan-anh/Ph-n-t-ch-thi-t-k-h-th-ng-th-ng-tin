@@ -1,0 +1,94 @@
+@startuml
+left to right direction
+
+skinparam actorStyle stickman
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam nodesep 25
+skinparam ranksep 50
+
+skinparam usecase {
+    BackgroundColor #70BFE5
+    BorderColor Black
+}
+
+actor "Thành viên hệ thống" as Member
+actor "Nhân viên" as Staff
+actor "Nhân viên thư viện" as Librarian
+actor "Nhân viên quản lý" as Manager
+actor "Độc giả" as Reader
+actor "Nhà cung cấp" as Supplier
+
+rectangle "Hệ thống quản lý thư viện" {
+
+    usecase "Login 5" as Login
+    usecase "Logout 5" as Logout
+    usecase "Change\nPassword 5" as ChangePassword
+    usecase "Search\nDocuments 5" as SearchDocuments
+    usecase "Search Documents'\nInformation 5" as SearchInformation
+    usecase "Register Reader\nCard 5" as RegisterCard
+    usecase "Handle Damaged/Lost\nDocuments 5" as HandleDocuments
+    usecase "Lend\nDocuments 5" as LendDocuments
+    usecase "Receive\nDocuments 5" as ReceiveDocuments
+    usecase "Manage\nReaders 5" as ManageReaders
+    usecase "Manage\nSuppliers 5" as ManageSuppliers
+    usecase "Manage\nDocuments 5" as ManageDocuments
+    usecase "View Documents'\nStatistics 5" as ViewDocumentStats
+    usecase "View Readers'\nStatistics 5" as ViewReaderStats
+    usecase "View Imported\nDocuments'\nStatistics 5" as ViewImportedStats
+}
+
+Member -- Login
+Member -- Logout
+Member -- ChangePassword
+
+Reader -- SearchInformation
+Reader -- RegisterCard
+Reader -- HandleDocuments
+Reader -- LendDocuments
+Reader -- ReceiveDocuments
+Reader -- ManageReaders
+
+Librarian -- SearchDocuments
+Librarian -- HandleDocuments
+Librarian -- LendDocuments
+Librarian -- ReceiveDocuments
+Librarian -- ManageReaders
+Librarian -- ManageSuppliers
+Librarian -- ManageDocuments
+
+Supplier -- ManageSuppliers
+Supplier -- ManageDocuments
+
+Manager -- ViewDocumentStats
+Manager -- ViewReaderStats
+Manager -- ViewImportedStats
+
+Staff --|> Member
+Librarian --|> Staff
+Manager --|> Staff
+Reader --|> Member
+
+SearchInformation --|> SearchDocuments
+
+Member -[hidden]down- Staff
+Staff -[hidden]down- Librarian
+Librarian -[hidden]down- Manager
+Manager -[hidden]down- Reader
+Reader -[hidden]down- Supplier
+
+Login -[hidden]down- Logout
+Logout -[hidden]down- ChangePassword
+ChangePassword -[hidden]down- SearchDocuments
+SearchDocuments -[hidden]down- SearchInformation
+SearchInformation -[hidden]down- RegisterCard
+RegisterCard -[hidden]down- HandleDocuments
+HandleDocuments -[hidden]down- LendDocuments
+LendDocuments -[hidden]down- ReceiveDocuments
+ReceiveDocuments -[hidden]down- ManageReaders
+ManageReaders -[hidden]down- ManageSuppliers
+ManageSuppliers -[hidden]down- ManageDocuments
+ManageDocuments -[hidden]down- ViewDocumentStats
+ViewDocumentStats -[hidden]down- ViewReaderStats
+ViewReaderStats -[hidden]down- ViewImportedStats
+@enduml
